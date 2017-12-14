@@ -54,7 +54,7 @@
       
       function addDownloadXLSXIcon ( plugin_id_in, p_region_static_id,p_version) {
         $('body').on( "dialogopen", function( event, ui ) {
-          if($('span.ui-dialog-title').text() === apex.lang.getMessage( "APEXIR_DOWNLOAD")) {
+          if($(event.target).prev('div.ui-dialog-titlebar').find('span.ui-dialog-title').text() === apex.lang.getMessage( "APEXIR_DOWNLOAD")) {
             var $dialog_window = $(event.target);
             var current_region_id = $dialog_window.attr('id').match(/(.+)_dialog_js/)[1];
             var re = new RegExp(p_region_static_id, 'g');
