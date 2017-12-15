@@ -6,7 +6,8 @@ IS
                            p_region_id    IN NUMBER,
                            p_col_length   IN VARCHAR2 DEFAULT NULL,
                            p_max_rows     IN NUMBER,
-                           p_autofilter   IN CHAR DEFAULT 'Y'
+                           p_autofilter   IN CHAR DEFAULT 'Y',
+                           p_filename    in varchar2 default null
                           ); 
   procedure download_debug(p_app_id      IN NUMBER,
                            p_page_id     IN NUMBER,

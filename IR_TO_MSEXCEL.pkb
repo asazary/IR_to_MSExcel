@@ -162,7 +162,8 @@ as
                                   p_region_id    => v_affected_region_id,
                                   p_col_length   => apex_application.g_x04||p_custom_width,
                                   p_max_rows     => v_maximum_rows,
-                                  p_autofilter   => p_autofilter
+                                  p_autofilter   => p_autofilter,
+                                  p_filename     => p_dynamic_action.attribute_05
                                   );
       elsif p_download_type = 'T' then 
         ir_to_xlsx.download_debug(p_app_id        => apex_application.g_x01,

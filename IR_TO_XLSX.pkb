@@ -1941,6 +1941,26 @@ as
      return apex_plugin_util.replace_substitutions(nvl(v_filename,'Excel'));
   end get_file_name;   
   ------------------------------------------------------------------------------
+  
+ function get_file_name2 (p_app_id      IN NUMBER,
+                          p_page_id     IN NUMBER,
+                          p_region_id   IN NUMBER,
+                          p_default_name in varchar2 default null)
+  return varchar2
+  is 
+    v_filename varchar2(255);
+  begin
+    select filename 
+    into v_filename
+    from APEX_APPLICATION_PAGE_IR
+    where application_id = p_app_id
+      and page_id = p_page_id
+      and region_id = p_region_id;
+     
+     return apex_plugin_util.replace_substitutions(nvl(p_default_name,nvl(v_filename,'Excel')));
+  end get_file_name2;   
+  ------------------------------------------------------------------------------
+  
   -- download binary file
   procedure download(p_data        IN OUT NOCOPY BLOB,
                      p_mime_type   IN VARCHAR2,
@@ -2014,7 +2034,8 @@ as
                            p_region_id   IN NUMBER, 
                            p_col_length  IN VARCHAR2 DEFAULT NULL,
                            p_max_rows    IN NUMBER,
-                           p_autofilter  IN CHAR DEFAULT 'Y'                           
+                           p_autofilter  IN CHAR DEFAULT 'Y',
+                           p_filename    in varchar2 default null
                           )
   is
     t_template blob;
@@ -2060,7 +2081,7 @@ as
  
     download(p_data      => t_excel,
              p_mime_type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-             p_file_name => get_file_name (p_app_id,p_page_id,p_region_id)||'.xlsx;'
+             p_file_name => get_file_name2 (p_app_id,p_page_id,p_region_id, p_filename)||'.xlsx;'
             );
     dbms_lob.freetemporary(t_excel);
     dbms_lob.freetemporary(v_cells);
